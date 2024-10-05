@@ -47,4 +47,6 @@ st.write("")
 # Renderizar o mapa com os filtros aplicados
 render_map(gdf_pse_group, coluna_selecionada)
 
+st.dataframe(gdf_pse_group.drop(columns="geometry"), hide_index=True)
+
 st.write("Data da última atualização:", formatted_date)

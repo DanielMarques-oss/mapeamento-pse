@@ -10,9 +10,10 @@ def transform_data(se_shp, dim_municipio_chropleth, atividades_pse2024, parti_ps
     dim_municipio_chropleth['id_municipio_ibge'] = dim_municipio_chropleth['id_municipio_ibge'].astype(str)
     se_shp = se_shp.merge(dim_municipio_chropleth[['id_municipio_ibge', 'ds_regiao_saude']],
                           left_on='CD_MUN', right_on='id_municipio_ibge')
-
+    
+    
     se_shp['id_municipio_ibge'] = se_shp['id_municipio_ibge'].apply(lambda x: str(x)[:6])
-
+    
     # Ajustar tipos de dados para evitar conflitos ao fazer merge
     atividades_pse2024['Ibge'] = atividades_pse2024['Ibge'].astype(str)
     parti_pse['Ibge'] = parti_pse['Ibge'].astype(str)
@@ -24,16 +25,18 @@ def transform_data(se_shp, dim_municipio_chropleth, atividades_pse2024, parti_ps
     grouped_atividades = atividades_pse2024.groupby(['Ibge', 'Municipio'])[atividades_pse2024.iloc[:, 4:-1].columns].sum().reset_index()
     grouped_parti = parti_pse.groupby(['Ibge', 'Municipio'])[parti_pse.iloc[:, 4:-1].columns].sum().reset_index()
 
-    pse = grouped_atividades.merge(grouped_parti, how='inner')
+    pse = grouped_atividades.merge(grouped_parti, how='outer')
     
     # Ajustar tipo de dado para evitar conflitos ao fazer merge
     pse['Ibge'] = pse['Ibge'].astype(str).apply(lambda x: str(x)[:6])
     se_shp['id_municipio_ibge'] = se_shp['id_municipio_ibge'].apply(lambda x: str(x)[:6])
+    
+    pse = pd.merge(se_shp[['geometry', 'geoid', 'id_municipio_ibge', 'NM_MUN','ds_regiao_saude']], 
+                    pse.drop(columns=['Municipio']),
+                    right_on='Ibge', left_on='id_municipio_ibge', how='left').drop(columns=['Ibge'])
+    
 
-    pse = pd.merge(pse, se_shp[['geometry', 'geoid', 'id_municipio_ibge', 'ds_regiao_saude']],
-                               left_on='Ibge', right_on='id_municipio_ibge', how='left')
-
-    pse.rename(columns={'ds_regiao_saude': 'Região de Saúde'}, inplace=True)
+    pse.rename(columns={'ds_regiao_saude': 'Região de Saúde', 'NM_MUN': "Municipio", 'id_municipio_ibge': 'Ibge'}, inplace=True)
 
     pse['Municipio'] = pse['Municipio'].str.title()
 
@@ -58,8 +61,6 @@ def transform_data(se_shp, dim_municipio_chropleth, atividades_pse2024, parti_ps
 
     pse.rename(columns=lambda x: "Prevenção da violência e promoção da cultura de paz" if x.startswith("Prevenção da vio") else x, inplace=True)
 
-    ###
-    
     pse.rename(columns=lambda x: "Participantes: Autocuidado de pessoas com doenças crônicas" if "Participantes:" in x and "Autocuidado" in x else x, inplace=True)
 
     pse.rename(columns=lambda x: "Participantes: Ações de combate ao Aedes aegypti" if "Participantes:" in x and "Ações de combate ao" in x else x, inplace=True)
@@ -76,10 +77,12 @@ def transform_data(se_shp, dim_municipio_chropleth, atividades_pse2024, parti_ps
     
     colunas_agg = pse.columns[col_index_agravos:col_index_part_semana]
     
+    pse[colunas_agg] = pse[colunas_agg].fillna(0)
     
-    pse_group = pse.groupby(["Região de Saúde", "Municipio", "geometry"])[colunas_agg].sum().reset_index()
-    
-    
+    pse_group = pse.groupby(["Região de Saúde", "Ibge", "Municipio", "geometry"], dropna=False)[colunas_agg].sum().reset_index() 
+   
+    pse_group[colunas_agg].fillna(0, inplace=True) 
+
     gdf_pse_group = gpd.GeoDataFrame(pse_group, geometry='geometry')
-    
+   
     return gdf_pse_group, colunas_agg, col_index_agravos

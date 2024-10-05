@@ -4,7 +4,9 @@ import streamlit as st
 def render_map(gdf_pse_group, coluna_selecionada):
     zmax = max(gdf_pse_group[coluna_selecionada])
     total = gdf_pse_group[coluna_selecionada].sum(skipna=True)
+    
     gdf_pse_group.index = gdf_pse_group['Municipio']
+
     fig = px.choropleth_mapbox(
         gdf_pse_group,
         width=1200,
