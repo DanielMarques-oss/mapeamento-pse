@@ -6,10 +6,12 @@ import os
 from datetime import datetime
 
 
-st.set_page_config(page_title="Análise de Atividades PSE", layout="wide")
+st.set_page_config(page_title="Análise de Atividades PSE", layout="wide", page_icon="📖")
 
 # Carregar dados
-se_shp, dim_municipio_chropleth, atividades_pse_jan_ago2024, parti_pse_jan_ago2024 = load_data()
+se_shp, dim_municipio_chropleth, atividades_pse_jan_ago2024, parti_pse_jan_ago2024 = (
+    load_data()
+)
 
 # Transformar dados
 gdf_pse_group, colunas_agg, col_index_agravos = transform_data(
@@ -20,17 +22,25 @@ gdf_pse_group, colunas_agg, col_index_agravos = transform_data(
 
 colunas_disponiveis = list(colunas_agg)
 
-filtro_opcoes = st.sidebar.selectbox("Escolha o nível de filtro:", ["Sergipe", "Região de Saúde"], index=0)
+filtro_opcoes = st.sidebar.selectbox(
+    "Escolha o nível de filtro:", ["Sergipe", "Região de Saúde"], index=0
+)
 
 if filtro_opcoes == "Região de Saúde":
     regioes = gdf_pse_group["Região de Saúde"].unique()
 
-    regiao_selecionada = st.sidebar.selectbox("Selecione a Região de Saúde", options=regioes)
-    
-    # Filtrar dados pela região de saúde
-    gdf_pse_group = gdf_pse_group[gdf_pse_group['Região de Saúde'] == regiao_selecionada]
+    regiao_selecionada = st.sidebar.selectbox(
+        "Selecione a Região de Saúde", options=regioes
+    )
 
-coluna_selecionada = st.sidebar.selectbox("Selecione o tema para saúde", options=colunas_disponiveis)
+    # Filtrar dados pela região de saúde
+    gdf_pse_group = gdf_pse_group[
+        gdf_pse_group["Região de Saúde"] == regiao_selecionada
+    ]
+
+coluna_selecionada = st.sidebar.selectbox(
+    "Selecione o tema para saúde", options=colunas_disponiveis
+)
 
 
 # Obtendo a última data de atualização do arquivo
