@@ -1,0 +1,76 @@
+,id_municipio_ibge,id_municipio_ms,nm_municipio,ds_regiao_saude,idh_2010,ds_tipo
+0,2800100,280010,Amparo do São Francisco,Propriá,0.611,Rural Adjacente
+1,2800209,280020,Aquidabã,Propriá,0.578,Intermediário Adjacente
+2,2800308,280030,Aracaju,Aracaju,0.77,Urbano
+3,2800407,280040,Arauá,Estância,0.595,Rural Adjacente
+4,2800506,280050,Areia Branca,Itabaiana,0.579,Rural Adjacente
+5,2800605,280060,Barra dos Coqueiros,Aracaju,0.649,Urbano
+6,2800670,280067,Boquim,Estância,0.604,Intermediário Adjacente
+7,2800704,280070,Brejo Grande,Propriá,0.54,Rural Adjacente
+8,2801009,280100,Campo do Brito,Itabaiana,0.621,Rural Adjacente
+9,2801108,280110,Canhoba,Propriá,0.569,Rural Adjacente
+10,2801207,280120,Canindé de São Francisco,Nossa Senhora da Glória,0.567,Intermediário Adjacente
+11,2801306,280130,Capela,Nossa Senhora do Socorro,0.615,Intermediário Adjacente
+12,2801405,280140,Carira,Itabaiana,0.588,Rural Adjacente
+13,2801504,280150,Carmópolis,Nossa Senhora do Socorro,0.643,Urbano
+14,2801603,280160,Cedro de São João,Propriá,0.623,Intermediário Adjacente
+15,2801702,280170,Cristinápolis,Estância,0.553,Rural Adjacente
+16,2801900,280190,Cumbe,Nossa Senhora do Socorro,0.604,Rural Adjacente
+17,2802007,280200,Divina Pastora,Aracaju,0.61,Urbano
+18,2802106,280210,Estância,Estância,0.647,Urbano
+19,2802205,280220,Feira Nova,Nossa Senhora da Glória,0.584,Rural Adjacente
+20,2802304,280230,Frei Paulo,Itabaiana,0.589,Rural Adjacente
+21,2802403,280240,Gararu,Nossa Senhora da Glória,0.564,Rural Adjacente
+22,2802502,280250,General Maynard,Nossa Senhora do Socorro,0.645,Urbano
+23,2802601,280260,Gracho Cardoso,Nossa Senhora da Glória,0.577,Rural Adjacente
+24,2802700,280270,Ilha das Flores,Propriá,0.562,Rural Adjacente
+25,2802809,280280,Indiaroba,Estância,0.58,Rural Adjacente
+26,2802908,280290,Itabaiana,Itabaiana,0.642,Urbano
+27,2803005,280300,Itabaianinha,Estância,0.556,Rural Adjacente
+28,2803104,280310,Itabi,Nossa Senhora da Glória,0.602,Rural Adjacente
+29,2803203,280320,Itaporanga d'Ajuda,Aracaju,0.561,Rural Adjacente
+30,2803302,280330,Japaratuba,Nossa Senhora do Socorro,0.621,Rural Adjacente
+31,2803401,280340,Japoatã,Propriá,0.56,Rural Adjacente
+32,2803500,280350,Lagarto,Lagarto,0.625,Urbano
+33,2803609,280360,Laranjeiras,Aracaju,0.642,Urbano
+34,2803708,280370,Macambira,Itabaiana,0.583,Rural Adjacente
+35,2803807,280380,Malhada dos Bois,Propriá,0.599,Rural Adjacente
+36,2803906,280390,Malhador,Itabaiana,0.587,Rural Adjacente
+37,2804003,280400,Maruim,Nossa Senhora do Socorro,0.618,Urbano
+38,2804102,280410,Moita Bonita,Itabaiana,0.587,Rural Adjacente
+39,2804201,280420,Monte Alegre de Sergipe,Nossa Senhora da Glória,0.553,Rural Adjacente
+40,2804300,280430,Muribeca,Propriá,0.626,Rural Adjacente
+41,2804409,280440,Neópolis,Propriá,0.589,Urbano
+42,2804458,280445,Nossa Senhora Aparecida,Itabaiana,0.577,Rural Adjacente
+43,2804508,280450,Nossa Senhora da Glória,Nossa Senhora da Glória,0.587,Intermediário Adjacente
+44,2804607,280460,Nossa Senhora das Dores,Nossa Senhora do Socorro,0.6,Intermediário Adjacente
+45,2804706,280470,Nossa Senhora de Lourdes,Propriá,0.598,Rural Adjacente
+46,2804805,280480,Nossa Senhora do Socorro,Nossa Senhora do Socorro,0.664,Urbano
+47,2804904,280490,Pacatuba,Propriá,0.555,Rural Adjacente
+48,2805000,280500,Pedra Mole,Itabaiana,0.593,Rural Adjacente
+49,2805109,280510,Pedrinhas,Estância,0.592,Rural Adjacente
+50,2805208,280520,Pinhão,Itabaiana,0.583,Rural Adjacente
+51,2805307,280530,Pirambu,Nossa Senhora do Socorro,0.603,Rural Adjacente
+52,2805406,280540,Poço Redondo,Nossa Senhora da Glória,0.529,Rural Adjacente
+53,2805505,280550,Poço Verde,Lagarto,0.561,Intermediário Adjacente
+54,2805604,280560,Porto da Folha,Nossa Senhora da Glória,0.568,Rural Adjacente
+55,2805703,280570,Propriá,Propriá,0.661,Urbano
+56,2805802,280580,Riachão do Dantas,Lagarto,0.539,Rural Adjacente
+57,2805901,280590,Riachuelo,Aracaju,0.617,Urbano
+58,2806008,280600,Ribeirópolis,Itabaiana,0.613,Intermediário Adjacente
+59,2806107,280610,Rosário do Catete,Nossa Senhora do Socorro,0.631,Urbano
+60,2806206,280620,Salgado,Lagarto,0.609,Rural Adjacente
+61,2806305,280630,Santa Luzia do Itanhy,Estância,0.545,Rural Adjacente
+62,2806404,280640,Santana do São Francisco,Propriá,0.59,Rural Adjacente
+63,2806503,280650,Santa Rosa de Lima,Aracaju,0.592,Rural Adjacente
+64,2806602,280660,Santo Amaro das Brotas,Nossa Senhora do Socorro,0.637,Rural Adjacente
+65,2806701,280670,São Cristóvão,Aracaju,0.662,Urbano
+66,2806800,280680,São Domingos,Itabaiana,0.588,Rural Adjacente
+67,2806909,280690,São Francisco,Propriá,0.587,Rural Adjacente
+68,2807006,280700,São Miguel do Aleixo,Itabaiana,0.567,Rural Adjacente
+69,2807105,280710,Simão Dias,Lagarto,0.604,Intermediário Adjacente
+70,2807204,280720,Siriri,Nossa Senhora do Socorro,0.609,Urbano
+71,2807303,280730,Telha,Propriá,0.604,Rural Adjacente
+72,2807402,280740,Tobias Barreto,Lagarto,0.557,Urbano
+73,2807501,280750,Tomar do Geru,Estância,0.551,Rural Adjacente
+74,2807600,280760,Umbaúba,Estância,0.579,Intermediário Adjacente
