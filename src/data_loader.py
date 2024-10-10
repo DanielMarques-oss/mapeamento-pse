@@ -3,7 +3,7 @@ import geopandas as gpd
 import streamlit as st
 
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def load_data():
     # Carrega os arquivos de dados
     se_shp = gpd.read_file(r"data/SE_Municipios_2022.shp").set_crs("epsg:4326")
