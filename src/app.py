@@ -1,9 +1,13 @@
+import pandas as pd
 import streamlit as st
 from data_loader import load_data
 from data_transformer import transform_data
 from map_renderer import render_map
 import os
 from datetime import datetime
+import csv
+
+
 
 
 st.set_page_config(page_title="Análise de Atividades PSE", layout="wide", page_icon="📖")
@@ -42,16 +46,6 @@ coluna_selecionada = st.sidebar.selectbox(
     "Selecione o tema para saúde", options=colunas_disponiveis
 )
 
-
-# Obtendo a última data de atualização do arquivo
-modification_time = os.path.getmtime(r"data/RelAtvColetivaMB.csv")
-
-# Convertendo o timestamp para um objeto datetime
-modification_time = datetime.fromtimestamp(modification_time)
-
-# Formatando a data no formato brasileiro (DD/MM/AAAA)
-formatted_date = modification_time.strftime("%d/%m/%Y")
-
 st.markdown("## Heatmap das atividades do Programa Saúde na Escola (SE), 2024")
 st.write("")
 # Renderizar o mapa com os filtros aplicados
@@ -59,4 +53,12 @@ render_map(gdf_pse_group, coluna_selecionada)
 
 st.dataframe(gdf_pse_group.drop(columns="geometry"), hide_index=True)
 
-st.write("Data da última atualização:", formatted_date)
+with open('data/RelAtvColetivaMB.csv', newline='', encoding='ISO-8859-1') as csvfile:
+    leitor_csv = csv.reader(csvfile, delimiter=',')
+    
+    # Ignora as duas primeiras linhas
+    for i, linha in enumerate(leitor_csv):
+        if i == 3:  # A terceira linha está no índice 2 (indexação começa em 0)
+            st.write(linha[0])
+            break  # Para o loop após imprimir a terceira linha
+
