@@ -11,11 +11,28 @@ def load_data():
     dim_municipio_chropleth = pd.read_csv(r"data/dimMunicipio.csv")
 
     # Carregar dados das atividades e participações
-    atividades_pse = pd.read_csv(
-        "data/RelAtvColetivaMB.csv", skiprows=9, encoding="ISO-8859-1", sep=";"
+    atividades_temas_pse = pd.read_csv(
+        "data/RelAtvColetivaMB.csv", skiprows=9, encoding="ISO-8859-1", sep=";", thousands='.'
     ).iloc[:-2]
-    parti_pse = pd.read_csv(
-        "data/RelPartiAtvColetivaMB.csv", skiprows=9, encoding="ISO-8859-1", sep=";"
+    parti_temas_pse = pd.read_csv(
+        "data/RelPartiAtvColetivaMB.csv", skiprows=9, encoding="ISO-8859-1", sep=";", thousands='.'
+    ).iloc[:-2]
+    praticas_saude_pse = pd.read_csv(
+        "data/RelPratSaude.csv", skiprows=9, encoding="ISO-8859-1", sep=";", thousands='.'
     ).iloc[:-2]
 
-    return se_shp, dim_municipio_chropleth, atividades_pse, parti_pse
+    parti_praticas_saude_pse = pd.read_csv(
+        "data/RelPartiPratSaude.csv", skiprows=9, encoding="ISO-8859-1", sep=";", thousands='.'
+    ).iloc[:-2]
+
+    escolas = pd.read_csv("data/escolas.csv", sep=";").iloc[:-2]
+
+    return (
+        se_shp,
+        dim_municipio_chropleth,
+        atividades_temas_pse,
+        parti_temas_pse,
+        praticas_saude_pse,
+        parti_praticas_saude_pse,
+        escolas,
+    )
