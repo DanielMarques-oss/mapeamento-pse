@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: format
+        name: Run format task from taskipy
+        entry: task format
+        language: system
+        types: [python]

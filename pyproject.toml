@@ -22,6 +22,7 @@ mkdocs-material = "^9.5.40"
 mkdocstrings = "^0.26.2"
 mkdocstrings-python = "^1.12.1"
 mkdocs-mermaid2-plugin = "^1.1.1"
+pre-commit = "^4.0.1"
 
 [tool.taskipy.tasks]
 format = "ruff check . --fix && black ."
