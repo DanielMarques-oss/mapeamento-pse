@@ -2,8 +2,6 @@ import streamlit as st  # Biblioteca para construção de aplicativos interativo
 from data_loader import load_data  # Função para carregar dados de fontes externas
 from data_transformer import transform_data  # Função para transformar e preparar dados
 from map_renderer import render_map  # Função para renderizar o mapa interativo
-from dotenv import load_dotenv  # Biblioteca para carregar variáveis de ambiente de arquivos .env
-import os  # Biblioteca para interagir com o sistema operacional
 import csv  # Biblioteca para manipulação de arquivos CSV
 
 # Carrega variáveis de ambiente a partir do arquivo .env
@@ -67,7 +65,8 @@ if regiao_selecionada != "Todas":
 # Criar um seletor para escolher um município na barra lateral
 municipio_selecionado = st.sidebar.selectbox(
     "Selecione o município:",  # Título do seletor
-    ["Todos"] + list(gdf_temas_praticas_pse_group["Municipio"].unique()),  # Lista de municípios
+    ["Todos"]
+    + list(gdf_temas_praticas_pse_group["Municipio"].unique()),  # Lista de municípios
 )
 
 # Se um município específico for selecionado, filtra os dados
@@ -84,7 +83,8 @@ if municipio_selecionado != "Todos":
 # Criar um seletor para escolher uma escola na barra lateral
 escola_selecionada = st.sidebar.selectbox(
     "Selecione a Escola",  # Título do seletor
-    options=["Todas"] + list(pse_temas_praticas_com_inep["Escola"].unique()),  # Lista de escolas
+    options=["Todas"]
+    + list(pse_temas_praticas_com_inep["Escola"].unique()),  # Lista de escolas
 )
 
 # Se uma escola específica for selecionada, filtra os dados
@@ -97,7 +97,7 @@ if escola_selecionada != "Todas":
 # Criar um seletor para escolher um tema ou prática de saúde na barra lateral
 coluna_selecionada = st.sidebar.selectbox(
     "Tema (T) ou prática (P) para saúde",  # Título do seletor
-    options=colunas_disponiveis  # Lista de colunas de temas/práticas disponíveis
+    options=colunas_disponiveis,  # Lista de colunas de temas/práticas disponíveis
 )
 
 # Título da seção de análise do mapa
@@ -114,7 +114,9 @@ st.dataframe(gdf_temas_praticas_pse_group.drop(columns="geometry"), hide_index=T
 # Exibir uma tabela com temas e práticas por escola
 st.markdown("### Tabela com temas e práticas por escola")
 st.dataframe(
-    pse_temas_praticas_com_inep.sort_values(by=["Região de Saúde", "Municipio", "Escola"]),
+    pse_temas_praticas_com_inep.sort_values(
+        by=["Região de Saúde", "Municipio", "Escola"]
+    ),
     hide_index=True,  # Esconder o índice da tabela
 )
 

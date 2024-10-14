@@ -1,6 +1,6 @@
 import pandas as pd
 import geopandas as gpd
-import streamlit as st
+
 
 def transform_data(
     se_shp,
@@ -12,7 +12,7 @@ def transform_data(
     escolas,
 ):
     """
-    Função para transformar e combinar vários datasets relacionados às atividades 
+    Função para transformar e combinar vários datasets relacionados às atividades
     coletivas de saúde e escolas com informações geográficas.
 
     Parameters:
@@ -25,7 +25,7 @@ def transform_data(
         escolas (DataFrame): Informações sobre as escolas.
 
     Returns:
-        tuple: 
+        tuple:
             - GeoDataFrame com os dados agregados e combinados geograficamente.
             - Lista com as colunas que representam os agregados de dados.
             - DataFrame com os dados combinados sem a geometria.
@@ -42,7 +42,7 @@ def transform_data(
     se_shp["id_municipio_ibge"] = se_shp["id_municipio_ibge"].apply(
         lambda x: str(x)[:6]
     )
-   
+
     # Renomear as colunas de participação em temas do PSE
     nova_colunas_parti_temas_pse = [
         (
@@ -65,17 +65,25 @@ def transform_data(
     ]
 
     parti_praticas_saude_pse.columns = nova_colunas_parti_praticas_saude_pse
-    
+
     # Combinar práticas de saúde com participação nas práticas (usando INEP como chave)
-    praticas_e_parti_saude_pse_com_inep = praticas_saude_pse.drop(columns=["Ibge", "Municipio"]).merge(
-        parti_praticas_saude_pse, how="outer", left_on="INEP (Escolas/Creche)", right_on="INEP (Escolas/Creche)"
+    praticas_e_parti_saude_pse_com_inep = praticas_saude_pse.drop(
+        columns=["Ibge", "Municipio"]
+    ).merge(
+        parti_praticas_saude_pse,
+        how="outer",
+        left_on="INEP (Escolas/Creche)",
+        right_on="INEP (Escolas/Creche)",
     )
 
     # Combinar atividades com participação em temas do PSE (usando INEP como chave)
     atividades_e_parti_temas_pse_com_inep = atividades_temas_pse.merge(
-        parti_temas_pse.drop(columns=["Ibge", "Municipio"]), how="outer", left_on="INEP (Escolas/Creche)", right_on="INEP (Escolas/Creche)"
+        parti_temas_pse.drop(columns=["Ibge", "Municipio"]),
+        how="outer",
+        left_on="INEP (Escolas/Creche)",
+        right_on="INEP (Escolas/Creche)",
     )
-    
+
     # Combinar todas as informações (atividades, práticas, participação) com INEP como chave
     pse_temas_praticas_com_inep = pd.merge(
         atividades_e_parti_temas_pse_com_inep,
@@ -84,7 +92,6 @@ def transform_data(
         right_on="INEP (Escolas/Creche)",
         how="outer",
     )
-
 
     # Formatar o nome dos municípios em maiúscula inicial
     pse_temas_praticas_com_inep["Municipio"] = pse_temas_praticas_com_inep[
@@ -99,12 +106,12 @@ def transform_data(
         escolas[["Código INEP", "Escola"]],
         left_on="INEP (Escolas/Creche)",
         right_on="Código INEP",
-        how='left'
+        how="left",
     ).drop(columns=["Código INEP"])
-    
+
     col_escola = pse_temas_praticas_com_inep.pop("Escola")
     pse_temas_praticas_com_inep.insert(3, col_escola.name, col_escola)
-    
+
     # Remover colunas "Unnamed" indesejadas
     pse_temas_praticas_com_inep = pse_temas_praticas_com_inep[
         [col for col in pse_temas_praticas_com_inep.columns if "Unnamed" not in col]
@@ -216,8 +223,12 @@ def transform_data(
         ),
         inplace=True,
     )
-    
-    pse_temas_praticas_com_inep.columns = pse_temas_praticas_com_inep.columns.str.replace('Escovação dental supervisionad', 'Escovação dental supervisionada')
+
+    pse_temas_praticas_com_inep.columns = (
+        pse_temas_praticas_com_inep.columns.str.replace(
+            "Escovação dental supervisionad", "Escovação dental supervisionada"
+        )
+    )
 
     # Combinar dados geográficos (shapefile) com os dados processados do PSE
     pse_temas_praticas_com_inep = pd.merge(
@@ -227,23 +238,22 @@ def transform_data(
         left_on="id_municipio_ibge",
         how="left",
     ).drop(columns=["id_municipio_ibge", "Ibge"])
-    
 
     # Renomear algumas colunas importantes para clareza
     pse_temas_praticas_com_inep.rename(
         columns={
             "ds_regiao_saude": "Região de Saúde",
             "NM_MUN": "Municipio",
-            "id_municipio_ibge": "Ibge"
+            "id_municipio_ibge": "Ibge",
         },
         inplace=True,
     )
-    
+
     # Atribuir prefixos às colunas para agrupar visualmente categorias semelhantes
     col_name_agravos = pse_temas_praticas_com_inep.columns[
         pse_temas_praticas_com_inep.columns.str.startswith("Agravos")
     ][0]
-    
+
     col_index_agravos = pse_temas_praticas_com_inep.columns.get_loc(col_name_agravos)
 
     col_name_parti_sema_saude = pse_temas_praticas_com_inep.columns[
@@ -257,11 +267,13 @@ def transform_data(
     )
 
     col_name_sit_vac = pse_temas_praticas_com_inep.columns[
-        pse_temas_praticas_com_inep.columns.str.startswith("Participantes: Verificação da sit")
+        pse_temas_praticas_com_inep.columns.str.startswith(
+            "Participantes: Verificação da sit"
+        )
     ][0]
 
     col_index_sit_vac = pse_temas_praticas_com_inep.columns.get_loc(col_name_sit_vac)
-   
+
     pse_temas_praticas_com_inep.columns = [
         (
             f"T. {col}"
@@ -278,14 +290,16 @@ def transform_data(
         )
         for i, col in enumerate(pse_temas_praticas_com_inep.columns)
     ]
-    
+
     # Preencher valores NaN com zero nas colunas agregadas
     colunas_agg = pse_temas_praticas_com_inep.columns[col_index_agravos:]
-    
-    pse_temas_praticas_com_inep[colunas_agg] = pse_temas_praticas_com_inep[colunas_agg].fillna(0)
+
+    pse_temas_praticas_com_inep[colunas_agg] = pse_temas_praticas_com_inep[
+        colunas_agg
+    ].fillna(0)
 
     # Preencher valores faltantes na coluna "Escola"
-    pse_temas_praticas_com_inep['Escola'].fillna("Não Encontrada", inplace=True)
+    pse_temas_praticas_com_inep["Escola"].fillna("Não Encontrada", inplace=True)
 
     # Agrupar os dados por região de saúde, município e geometria, somando os valores das colunas agregadas
     pse_temas_praticas_sem_inep_group = (
@@ -303,5 +317,9 @@ def transform_data(
     gdf_pse_temas_praticas_sem_inep_group = gpd.GeoDataFrame(
         pse_temas_praticas_sem_inep_group, geometry="geometry"
     )
-    
-    return gdf_pse_temas_praticas_sem_inep_group, colunas_agg, pse_temas_praticas_com_inep.drop(columns=["geometry", "geoid"])
+
+    return (
+        gdf_pse_temas_praticas_sem_inep_group,
+        colunas_agg,
+        pse_temas_praticas_com_inep.drop(columns=["geometry", "geoid"]),
+    )
