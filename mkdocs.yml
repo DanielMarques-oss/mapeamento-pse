@@ -1,0 +1,18 @@
+site_name: Mapeamento PSE
+
+theme: 
+  name: "material"
+
+nav:
+  - Home: index.md
+  - API Reference:
+    - load_data: api/data_loader.md
+    - transform_data: api/data_transformer.md
+    - render_map: api/map_renderer.md
+
+plugins:
+  - search
+  - mermaid2
+  - mkdocstrings:
+      default_handler: python
+  

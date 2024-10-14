@@ -17,6 +17,11 @@ taskipy = "^1.13.0"
 python-dotenv = "^1.0.1"
 langchain = "^0.3.3"
 langchain-openai = "^0.2.2"
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.5.40"
+mkdocstrings = "^0.26.2"
+mkdocstrings-python = "^1.12.1"
+mkdocs-mermaid2-plugin = "^1.1.1"
 
 [tool.taskipy.tasks]
 format = "ruff check . --fix && black ."
