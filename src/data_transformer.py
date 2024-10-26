@@ -33,11 +33,12 @@ def transform_data(
 
     # Combinar shapefile com a tabela de municípios e regiões de saúde
     se_shp = se_shp.merge(
-        dim_municipio[["id_municipio_ibge", "ds_regiao_saude"]],
+        dim_municipio[["id_municipio_ibge", "ds_regiao_saude", "DRE"]],
         left_on="CD_MUN",
         right_on="id_municipio_ibge",
     )
 
+    se_shp.rename(columns={"dre": "DRE"}, inplace=True)
     # Aplicar formatação de 6 dígitos ao ID do município
     se_shp["id_municipio_ibge"] = se_shp["id_municipio_ibge"].apply(
         lambda x: str(x)[:6]
@@ -232,7 +233,16 @@ def transform_data(
 
     # Combinar dados geográficos (shapefile) com os dados processados do PSE
     pse_temas_praticas_com_inep = pd.merge(
-        se_shp[["geometry", "geoid", "id_municipio_ibge", "ds_regiao_saude", "NM_MUN"]],
+        se_shp[
+            [
+                "geometry",
+                "geoid",
+                "id_municipio_ibge",
+                "ds_regiao_saude",
+                "DRE",
+                "NM_MUN",
+            ]
+        ],
         pse_temas_praticas_com_inep.drop(columns=["Municipio"]),
         right_on="Ibge",
         left_on="id_municipio_ibge",
@@ -304,7 +314,7 @@ def transform_data(
     # Agrupar os dados por região de saúde, município e geometria, somando os valores das colunas agregadas
     pse_temas_praticas_sem_inep_group = (
         pse_temas_praticas_com_inep.groupby(
-            ["Região de Saúde", "Municipio", "geometry"], dropna=False
+            ["Região de Saúde", "DRE", "Municipio", "geometry"], dropna=False
         )[colunas_agg]
         .sum()
         .reset_index()

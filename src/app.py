@@ -43,23 +43,44 @@ gdf_temas_praticas_pse_group, colunas_agg, pse_temas_praticas_com_inep = transfo
 colunas_disponiveis = list(colunas_agg)  # Colunas disponíveis para filtro
 
 # Obter as diferentes regiões de saúde para filtro
-regioes = gdf_temas_praticas_pse_group["Região de Saúde"].unique()
+regioes_saude = gdf_temas_praticas_pse_group["Região de Saúde"].unique()
 
 # Criar um seletor para escolher uma região de saúde na barra lateral
-regiao_selecionada = st.sidebar.selectbox(
+regiao_saude_selecionada = st.sidebar.selectbox(
     "Selecione a região de saúde:",  # Título do seletor
-    ["Todas"] + list(regioes),  # Opções: Todas ou uma lista das regiões de saúde
+    ["Todas"] + list(regioes_saude),  # Opções: Todas ou uma lista das regiões de saúde
 )
 
 # Se uma região específica for selecionada, filtra os dados
-if regiao_selecionada != "Todas":
+if regiao_saude_selecionada != "Todas":
     # Filtrar o GeoDataFrame com base na região selecionada
     gdf_temas_praticas_pse_group = gdf_temas_praticas_pse_group[
-        gdf_temas_praticas_pse_group["Região de Saúde"] == regiao_selecionada
+        gdf_temas_praticas_pse_group["Região de Saúde"] == regiao_saude_selecionada
     ]
     # Filtrar os dados do PSE com base na região selecionada
     pse_temas_praticas_com_inep = pse_temas_praticas_com_inep[
-        pse_temas_praticas_com_inep["Região de Saúde"] == regiao_selecionada
+        pse_temas_praticas_com_inep["Região de Saúde"] == regiao_saude_selecionada
+    ]
+
+# Obter as diferentes regiões de saúde para filtro
+regioes_dre = gdf_temas_praticas_pse_group["DRE"].unique()
+
+# Criar um seletor para escolher uma região de saúde na barra lateral
+regiao_dre_selecionada = st.sidebar.selectbox(
+    "Selecione a regional de educação:",  # Título do seletor
+    ["Todas"]
+    + sorted(list(regioes_dre)),  # Opções: Todas ou uma lista das regiões de saúde
+)
+
+# Se uma região específica for selecionada, filtra os dados
+if regiao_dre_selecionada != "Todas":
+    # Filtrar o GeoDataFrame com base na região selecionada
+    gdf_temas_praticas_pse_group = gdf_temas_praticas_pse_group[
+        gdf_temas_praticas_pse_group["DRE"] == regiao_dre_selecionada
+    ]
+    # Filtrar os dados do PSE com base na região selecionada
+    pse_temas_praticas_com_inep = pse_temas_praticas_com_inep[
+        pse_temas_praticas_com_inep["DRE"] == regiao_dre_selecionada
     ]
 
 # Criar um seletor para escolher um município na barra lateral
