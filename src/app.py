@@ -65,11 +65,11 @@ if regiao_saude_selecionada != "Todas":
 # Obter as diferentes regiões de saúde para filtro
 regioes_dre = gdf_temas_praticas_pse_group["DRE"].unique()
 
-# Criar um seletor para escolher uma região de saúde na barra lateral
+# Criar um seletor para escolher uma região de educação na barra lateral
 regiao_dre_selecionada = st.sidebar.selectbox(
     "Selecione a regional de educação:",  # Título do seletor
     ["Todas"]
-    + sorted(list(regioes_dre)),  # Opções: Todas ou uma lista das regiões de saúde
+    + sorted(list(regioes_dre)),  # Opções: Todas ou uma lista das regiões de educação
 )
 
 # Se uma região específica for selecionada, filtra os dados
