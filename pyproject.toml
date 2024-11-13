@@ -23,6 +23,7 @@ mkdocstrings = "^0.26.2"
 mkdocstrings-python = "^1.12.1"
 mkdocs-mermaid2-plugin = "^1.1.1"
 pre-commit = "^4.0.1"
+streamlit-aggrid = "^1.0.5"
 
 [tool.taskipy.tasks]
 format = "ruff check . --fix && black ."

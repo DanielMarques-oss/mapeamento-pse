@@ -3,6 +3,7 @@ from data_loader import load_data  # Função para carregar dados de fontes exte
 from data_transformer import transform_data  # Função para transformar e preparar dados
 from map_renderer import render_map  # Função para renderizar o mapa interativo
 import csv  # Biblioteca para manipulação de arquivos CSV
+from st_aggrid import AgGrid, GridOptionsBuilder
 
 # Carrega variáveis de ambiente a partir do arquivo .env
 # load_dotenv()
@@ -130,16 +131,47 @@ render_map(gdf_temas_praticas_pse_group, coluna_selecionada)
 # Exibir uma tabela com temas e práticas agregados por município
 st.markdown("### Tabela com temas e práticas por município")
 st.write("*A vírgula está como separador de milhar e o ponto como separador decimal")
-st.dataframe(gdf_temas_praticas_pse_group.drop(columns="geometry"), hide_index=True)
+
+gb_gdf_temas_praticas_pse_group = GridOptionsBuilder.from_dataframe(
+    gdf_temas_praticas_pse_group.drop(columns="geometry")
+)
+gb_gdf_temas_praticas_pse_group.configure_column("Região de Saúde", pinned="left")
+gb_gdf_temas_praticas_pse_group.configure_column("DRE", pinned="left")
+gb_gdf_temas_praticas_pse_group.configure_column("Municipio", pinned="left")
+# Aplicar configurações no grid
+gb_gdf_temas_praticas_pse_group_grid_options = gb_gdf_temas_praticas_pse_group.build()
+
+# Exibir o dataframe com colunas fixadas
+AgGrid(
+    gdf_temas_praticas_pse_group.drop(columns="geometry"),
+    gridOptions=gb_gdf_temas_praticas_pse_group_grid_options,
+    width="100%",
+)
 
 # Exibir uma tabela com temas e práticas por escola
 st.markdown("### Tabela com temas e práticas por escola")
-st.dataframe(
+
+gb_temas_praticas_pse_com_inep = GridOptionsBuilder.from_dataframe(
+    pse_temas_praticas_com_inep.sort_values(
+        by=["Região de Saúde", "Municipio", "Escola"]
+    )
+)
+gb_temas_praticas_pse_com_inep.configure_column("Região de Saúde", pinned="left")
+gb_temas_praticas_pse_com_inep.configure_column("DRE", pinned="left")
+gb_temas_praticas_pse_com_inep.configure_column("Municipio", pinned="left")
+gb_temas_praticas_pse_com_inep.configure_column("INEP (Escolas/Creche)", pinned="left")
+# Aplicar configurações no grid
+gb_temas_praticas_pse_com_inep_grid_options = gb_temas_praticas_pse_com_inep.build()
+
+# Exibir o dataframe com colunas fixadas
+AgGrid(
     pse_temas_praticas_com_inep.sort_values(
         by=["Região de Saúde", "Municipio", "Escola"]
     ),
-    hide_index=True,  # Esconder o índice da tabela
+    gridOptions=gb_temas_praticas_pse_com_inep_grid_options,
+    width="100%",
 )
+
 
 # Abrir e ler um arquivo CSV, delimitado por vírgula, com encoding ISO-8859-1, para identificar as competências a que se referem os dados
 with open("data/RelAtvColetivaMB.csv", newline="", encoding="ISO-8859-1") as csvfile:
