@@ -159,7 +159,7 @@ gb_temas_praticas_pse_com_inep = GridOptionsBuilder.from_dataframe(
 gb_temas_praticas_pse_com_inep.configure_column("Região de Saúde", pinned="left")
 gb_temas_praticas_pse_com_inep.configure_column("DRE", pinned="left")
 gb_temas_praticas_pse_com_inep.configure_column("Municipio", pinned="left")
-gb_temas_praticas_pse_com_inep.configure_column("INEP (Escolas/Creche)", pinned="left")
+gb_temas_praticas_pse_com_inep.configure_column("Escola", pinned="left")
 # Aplicar configurações no grid
 gb_temas_praticas_pse_com_inep_grid_options = gb_temas_praticas_pse_com_inep.build()
 
