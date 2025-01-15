@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pse"
+name = "app"
 version = "0.1.0"
 description = ""
 authors = ["Danie Marques de Almeida <danielmarques.enfermagem@gmail.com>"]
