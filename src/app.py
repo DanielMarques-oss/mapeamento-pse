@@ -123,7 +123,7 @@ coluna_selecionada = st.sidebar.selectbox(
 )
 
 # Título da seção de análise do mapa
-st.markdown("## Heatmap das atividades do Programa Saúde na Escola (SE), 2024")
+st.markdown("## Heatmap das atividades do Programa Saúde na Escola (SE), 2025")
 
 # Renderizar o mapa interativo com base nos filtros selecionados
 render_map(gdf_temas_praticas_pse_group, coluna_selecionada)
